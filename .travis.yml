@@ -1,0 +1,24 @@
+sudo: required
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - docker build -t whideaevolver/playground-docker-react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true whideaevolver/playground-docker-react-test npm test
+
+after_success:
+  - docker build -t whideaevolver/multi-client -f ./client
+  - docker build -t whideaevolver/multi-nginx -f ./nginx
+  - docker build -t whideaevolver/multi-server -f ./server
+  - docker build -t whideaevolver/multi-worker -f ./worker
+  # Log in to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin "$DOCKER_PASSWORD"
+  # Take those images and push them to docker hub
+  - docker push whideaevolver/multi-client
+  - docker push whideaevolver/multi-nginx
+  - docker push whideaevolver/multi-server
+  - docker push whideaevolver/multi-worker
