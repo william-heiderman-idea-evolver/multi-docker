@@ -11,10 +11,10 @@ script:
   - docker run -e CI=true whideaevolver/playground-docker-react-test npm test
 
 after_success:
-  - docker build -t whideaevolver/multi-client -f ./client
-  - docker build -t whideaevolver/multi-nginx -f ./nginx
-  - docker build -t whideaevolver/multi-server -f ./server
-  - docker build -t whideaevolver/multi-worker -f ./worker
+  - docker build -t whideaevolver/multi-client ./client
+  - docker build -t whideaevolver/multi-nginx ./nginx
+  - docker build -t whideaevolver/multi-server ./server
+  - docker build -t whideaevolver/multi-worker ./worker
   # Log in to docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin "$DOCKER_PASSWORD"
   # Take those images and push them to docker hub
