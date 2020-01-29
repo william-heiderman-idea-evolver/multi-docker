@@ -16,7 +16,7 @@ after_success:
   - docker build -t whideaevolver/multi-server ./server
   - docker build -t whideaevolver/multi-worker ./worker
   # Log in to docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin "$DOCKER_PASSWORD"
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
   - docker push whideaevolver/multi-client
   - docker push whideaevolver/multi-nginx
